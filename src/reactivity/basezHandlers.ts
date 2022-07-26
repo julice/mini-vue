@@ -1,4 +1,5 @@
 import { track, trigger } from './effect';
+import { ReactiveFlags } from './reactive';
 
 const get = createGetter();
 const set = createSetter();
@@ -7,6 +8,12 @@ const readonlyget = createGetter(true);
 function createGetter(readonly = true) {
   return function get(target, key) {
     const res = Reflect.get(target, key);
+    if (key === ReactiveFlags.IS_REACTIVE) {
+      return !readonly;
+    }
+    if (key === ReactiveFlags.IS_READONLY) {
+      return readonly;
+    }
     // todo 依赖收集
     track(target, key);
     return res;
