@@ -9,6 +9,7 @@ describe('readonly', () => {
     expect(isReactive(wrapped)).toBe(false);
     expect(isReactive(original)).toBe(false);
     expect(isReadonly(original)).toBe(false);
+    expect(isReadonly(wrapped.bar)).toBe(true);
     expect(isReadonly(wrapped)).toBe(true);
   });
   it('warn then call set', () => {
